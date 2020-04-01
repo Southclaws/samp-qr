@@ -1,0 +1,54 @@
+{
+	"user": "Southclaws",
+	"repo": "samp-qr",
+	"entry": "test.pwn",
+	"output": "test/gamemodes/test.amx",
+	"dependencies": [
+		"pawn-lang/samp-stdlib",
+		"samp-incognito/samp-streamer-plugin"
+	],
+	"dev_dependencies": [
+		"pawn-lang/YSI-Includes@5.x"
+	],
+	"build": {
+		"name": "",
+		"version": "3.10.10"
+	},
+	"runtime": {
+		"version": "0.3.7",
+		"mode": "server",
+		"echo": "Loading configuration...",
+		"plugins": [
+			"Southclaws/samp-qr"
+		],
+		"rcon_password": "password",
+		"port": 8192,
+		"hostname": "SA-MP Server",
+		"maxplayers": 50,
+		"language": ""
+	},
+	"resources": [
+		{
+			"name": "samp-qr-linux.zip",
+			"platform": "linux",
+			"archive": true,
+			"includes": [
+				"includes"
+			],
+			"plugins": [
+				"plugins/samp_qr.so"
+			]
+		},
+		{
+			"name": "samp-qr-windows.zip",
+			"platform": "windows",
+			"archive": true,
+			"includes": [
+				"includes"
+			],
+			"plugins": [
+				"plugins/samp_qr.dll"
+			]
+		}
+	]
+}
