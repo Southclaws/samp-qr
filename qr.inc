@@ -25,15 +25,17 @@ native QR_GetMatrix(const input[], output[], length = sizeof output);
 // -
 
 const QR_DIMENSIONS = 25;
-const QR_ARRAY_SIZE = QR_DIMENSIONS * QR_DIMENSIONS;
+const QR_ARRAY_SIZE = (QR_DIMENSIONS * QR_DIMENSIONS) + 1;
 
-const QR_PIXEL_OBJECT = 19811; // a burger box, nice and square
-const Float:QR_PIXEL_GRID_OFFSET = 0.2; // place the "pixels" this far apart
+const QR_PIXEL_OBJECT_BLACK = 3106;
+const QR_PIXEL_OBJECT_WHITE = 3003;
+const Float:QR_PIXEL_GRID_OFFSET = 0.05; // place the "pixels" this far apart
 
 // QR_CreateGrid 
 stock QR_CreateGrid(
     playerid,
     worldid,
+    const matrix[],
     QRGrid:grid[QR_DIMENSIONS][QR_DIMENSIONS],
     Float:x = 0.0,
     Float:y = 0.0,
@@ -42,7 +44,9 @@ stock QR_CreateGrid(
     for(new ix = 0; ix < QR_DIMENSIONS; ++ix) {
         for(new iy = 0; iy < QR_DIMENSIONS; ++iy) {
             grid[ix][iy] = QRGrid:CreateDynamicObject(
-                19811,
+                matrix[ix + iy * (QR_DIMENSIONS)] == '1' ?
+                    QR_PIXEL_OBJECT_BLACK :
+                    QR_PIXEL_OBJECT_WHITE,
                 x + (QR_PIXEL_GRID_OFFSET * ix),
                 y + (QR_PIXEL_GRID_OFFSET * iy),
                 z,
@@ -52,20 +56,4 @@ stock QR_CreateGrid(
     }
 
     return;
-}
-stock QR_ApplyMatrix(
-    const matrix[],
-    const QRGrid:grid[QR_DIMENSIONS][QR_DIMENSIONS]
-) {
-    for(new x = 0; x < QR_DIMENSIONS; ++x) {
-        for(new y = 0; y < QR_DIMENSIONS; ++y) {
-            SetDynamicObjectMaterial(
-                _:grid[x][y], 0, 18646,
-                "matcolours", "white",
-                matrix[x + y * (QR_DIMENSIONS)] ?
-                    0xFFFFFFFF :
-                    0x00000000
-            );
-        }
-    }
 }
